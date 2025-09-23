@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: order-query-service
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
