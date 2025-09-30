@@ -1,4 +1,4 @@
-package com.github.sidneymiranda.order.command.service;
+package com.github.sidneymiranda.order.command;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
