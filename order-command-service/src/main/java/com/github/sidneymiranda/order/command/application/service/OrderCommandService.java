@@ -53,16 +53,16 @@ public class OrderCommandService implements CreateOrderUseCase {
 
         orderStore.put(order.getOrderId(), order);
 
-        DomainEvent event = new OrderCreatedEvent(
-                order.getOrderId(),
-                order.getClient(),
-                order.getProductId(),
-                order.getUnitPrice(),
-                order.getQuantity(),
-                order.getTotalAmount(),
-                order.getStatus(),
-                order.getCreatedAt()
-        );
+        DomainEvent event = OrderCreatedEvent.builder()
+                .orderId(order.getOrderId())
+                .client(order.getClient())
+                .productId(order.getProductId())
+                .unitPrice(order.getUnitPrice())
+                .quantity(order.getQuantity())
+                .totalAmount(order.getTotalAmount())
+                .status(order.getStatus())
+                .createdAt(order.getCreatedAt())
+                .build();
 
         saveAndPublishEvent(EventType.CREATED, event, order.getOrderId());
     }
@@ -75,7 +75,11 @@ public class OrderCommandService implements CreateOrderUseCase {
         }
 
         order.confirm();
-        DomainEvent event = new OrderConfirmedEvent(order.getOrderId(), order.getStatus(), Instant.now());
+        DomainEvent event = OrderConfirmedEvent.builder()
+                .orderId(order.getOrderId())
+                .status(order.getStatus())
+                .confirmedAt(Instant.now())
+                .build();
 
         saveAndPublishEvent(EventType.CONFIRMED, event, order.getOrderId());
     }
@@ -88,7 +92,11 @@ public class OrderCommandService implements CreateOrderUseCase {
         }
 
         order.cancel();
-        DomainEvent event = new OrderCancelledEvent(order.getOrderId(), order.getStatus(), Instant.now());
+        DomainEvent event = OrderCancelledEvent.builder()
+                .orderId(order.getOrderId())
+                .status(order.getStatus())
+                .cancelledAt(Instant.now())
+                .build();
 
         saveAndPublishEvent(EventType.CANCELED, event, order.getOrderId());
     }

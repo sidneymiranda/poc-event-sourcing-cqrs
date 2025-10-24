@@ -24,7 +24,7 @@ public class Order {
         this.unitPrice = builder.unitPrice;
         this.quantity = builder.quantity;
         this.totalAmount = builder.unitPrice.multiply(builder.quantity.value());
-        this.createdAt = builder.createdAt;
+        this.createdAt = builder.createdAt != null ? builder.createdAt : Instant.now();
         this.status = OrderStatus.CREATED;
         validateOrder();
     }
